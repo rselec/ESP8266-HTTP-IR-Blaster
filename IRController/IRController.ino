@@ -302,8 +302,8 @@ bool setupWifi(bool resetConf) {
   // set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);
 
-  // Reset device if on config portal for greater than 3 minutes
-  wifiManager.setConfigPortalTimeout(180);
+  // Reset device if on config portal for greater than 10 minutes
+  wifiManager.setConfigPortalTimeout(600);
 
   if (SPIFFS.begin()) {
     Serial.println("mounted file system");
@@ -1430,7 +1430,13 @@ void loop() {
     digitalWrite(ledpin, LOW);                                    // Turn on the LED for 0.5 seconds
     ticker.attach(0.5, disableLed);
 	}
-	irrecv.resume();                                              // Prepare for the next value
+	irrecv.resume();                                                // Prepare for the next value
   }
+  
+  if(digitalRead(configpin) == LOW)                               // Reset by pressing Flash key to enable reconfiguration
+  {
+    ESP.reset();
+  }  
+  
   delay(200);
 }
