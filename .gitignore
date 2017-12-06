@@ -1,0 +1,23 @@
+# EAGLE temp files
+*.s#*
+*.b#*
+
+# Atmel Studio temp output files
+*.d
+*.o
+*.lss
+*.map
+*.srec
+*.atsuo
+# run git rm --cached *.atsuo to remove the atsuo file
+
+# Containers and such a stuff
+*.zip
+*Thumbs.db
+
+# photos
+*photos*
+
+# unopen or generated 3D files
+*.scdoc
+*.gcode
