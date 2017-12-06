@@ -22,19 +22,19 @@
 const bool getExternalIP = false;                             // Set to false to disable querying external IP
 
 const bool getTime = true;                                    // Set to false to disable querying for the time
-const int timeOffset = -14400;                                // Timezone offset in seconds
+const int timeOffset = +3600;                                // Timezone offset in seconds
 
-int pinr1 = 14;                                               // Receiving pin
-int pins1 = 4;                                                // Transmitting preset 1
-int pins2 = 5;                                                // Transmitting preset 2
-int pins3 = 12;                                               // Transmitting preset 3
-int pins4 = 13;                                               // Transmitting preset 4
+int pinr1 = D1;                                               // Receiving pin
+int pins1 = D6;                                               // Transmitting preset 1
+//int pins2 = 5;                                                // Transmitting preset 2
+//int pins3 = 12;                                               // Transmitting preset 3
+//int pins4 = 13;                                               // Transmitting preset 4
 
 // User settings are above here
 
-const int configpin = 10;                                     // GPIO10
+const int configpin = 0;                                      // GPIO0 = flash key
 const int ledpin = BUILTIN_LED;                               // Built in LED defined for WEMOS people
-const char *wifi_config_name = "IR Controller Configuration";
+const char *wifi_config_name = "IR-Gateway Configuration";
 const char serverName[] = "checkip.dyndns.org";
 int port = 80;
 char passcode[20] = "";
@@ -43,8 +43,8 @@ char port_str[6] = "80";
 char user_id[60] = "";
 const char* fingerprint = "8D 83 C3 5F 0A 09 84 AE B0 64 39 23 8F 05 9E 4D 5E 08 60 06";
 
-char static_ip[16] = "10.0.1.10";
-char static_gw[16] = "10.0.1.1";
+char static_ip[16] = "192.168.250.250";
+char static_gw[16] = "192.168.250.1";
 char static_sn[16] = "255.255.255.0";
 
 DynamicJsonBuffer jsonBuffer;
@@ -59,9 +59,9 @@ bool holdReceive = false;                                     // Flag to prevent
 
 IRrecv irrecv(pinr1);
 IRsend irsend1(pins1);
-IRsend irsend2(pins2);
-IRsend irsend3(pins3);
-IRsend irsend4(pins4);
+//IRsend irsend2(pins2);
+//IRsend irsend3(pins3);
+//IRsend irsend4(pins4);
 
 const unsigned long resetfrequency = 259200000;                // 72 hours in milliseconds
 const char* poolServerName = "time.nist.gov";
@@ -424,6 +424,8 @@ bool setupWifi(bool resetConf) {
 // Setup web server and IR receiver/blaster
 //
 void setup() {
+  pinMode(pins1, OUTPUT);   // turn off ir led first
+  digitalWrite(pins1, LOW);
 
   // Initialize serial
   Serial.begin(115200);
@@ -736,9 +738,9 @@ void setup() {
   externalIP();
 
   irsend1.begin();
-  irsend2.begin();
-  irsend3.begin();
-  irsend4.begin();
+//  irsend2.begin();
+//  irsend3.begin();
+//  irsend4.begin();
   irrecv.enableIRIn();
   Serial.println("Ready to send and receive IR signals");
 }
@@ -796,9 +798,9 @@ String getValue(String data, char separator, int index)
 IRsend pickIRsend (int out) {
   switch (out) {
     case 1: return irsend1;
-    case 2: return irsend2;
-    case 3: return irsend3;
-    case 4: return irsend4;
+//    case 2: return irsend2;
+//    case 3: return irsend3;
+//    case 4: return irsend4;
     default: return irsend1;
   }
 }
@@ -993,10 +995,10 @@ void sendHomePage(String message, String header, int type, int httpcode) {
   server.sendContent("        <div class='col-md-12'>\n");
   server.sendContent("          <ul class='list-unstyled'>\n");
   server.sendContent("            <li><span class='badge'>GPIO " + String(pinr1) + "</span> Receiving </li>\n");
-  server.sendContent("            <li><span class='badge'>GPIO " + String(pins1) + "</span> Transmitter 1 </li>\n");
-  server.sendContent("            <li><span class='badge'>GPIO " + String(pins2) + "</span> Transmitter 2 </li>\n");
-  server.sendContent("            <li><span class='badge'>GPIO " + String(pins3) + "</span> Transmitter 3 </li>\n");
-  server.sendContent("            <li><span class='badge'>GPIO " + String(pins4) + "</span> Transmitter 4 </li></ul>\n");
+//  server.sendContent("            <li><span class='badge'>GPIO " + String(pins1) + "</span> Transmitter 1 </li>\n");
+//  server.sendContent("            <li><span class='badge'>GPIO " + String(pins2) + "</span> Transmitter 2 </li>\n");
+//  server.sendContent("            <li><span class='badge'>GPIO " + String(pins3) + "</span> Transmitter 3 </li>\n");
+  server.sendContent("            <li><span class='badge'>GPIO " + String(pins1) + "</span> Transmitter 1 </li></ul>\n");
   server.sendContent("        </div>\n");
   server.sendContent("      </div>\n");
   sendFooter();
@@ -1413,6 +1415,7 @@ void loop() {
   if (getTime || strlen(user_id) != 0) timeClient.update();                               // Update the time
 
   if (irrecv.decode(&results) && !holdReceive) {                  // Grab an IR code
+    if (results.decode_type != UNKNOWN) {                         // Display only known codes
     Serial.println("Signal received:");
     fullCode(&results);                                           // Print the singleline value
     dumpCode(&results);                                           // Output the results as source code
@@ -1423,10 +1426,11 @@ void loop() {
     cvrtCode(last_recv, &results);                                // Store the results
     strncpy(last_recv.timestamp, String(timeClient.getFormattedTime()).c_str(), 40);  // Set the new update time
     last_recv.valid = true;
-    Serial.println("");                                           // Blank line between entries
-    irrecv.resume();                                              // Prepare for the next value
+    Serial.println("");                                           // Blank line between entries    
     digitalWrite(ledpin, LOW);                                    // Turn on the LED for 0.5 seconds
     ticker.attach(0.5, disableLed);
+	}
+	irrecv.resume();                                              // Prepare for the next value
   }
   delay(200);
 }
