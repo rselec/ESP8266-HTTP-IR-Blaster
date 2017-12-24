@@ -1,0 +1,991 @@
+{
+	"style": "flat",
+	"name": "MultimediaRemote",
+	"orientation": "portrait",
+	"navigation": "fix",
+	"preventSleep": false,
+	"navBackground": "30,30,30",
+	"connections": [
+		{
+			"host": "192.168.123.123",
+			"name": "RPi",
+			"port": 12345
+		},
+		{
+			"host": "192.168.123.124",
+			"name": "IR",
+			"port": 80,
+			"protocol": "http",
+			"format": "string",
+			"eventBased": false,
+			"timeout": "3.0"
+		}
+	],
+	"pagebuttonwidth": "static",
+	"theme": "dark",
+	"version": 2,
+	"device": "Google Nexus 7",
+	"type": "NetIOConfiguration",
+	"pages": [
+		{
+			"textcolor": "230,230,230",
+			"name": "Main",
+			"fitToScreen": true,
+			"label": "Main",
+			"width": 800,
+			"connection": "RPi",
+			"background": "58,58,58",
+			"items": [
+				{
+					"offSend": "gpio 16 0",
+					"onColor": "5,122,1",
+					"knobColor": "55,55,55",
+					"top": 10,
+					"interval": 500,
+					"connection": "RPi",
+					"height": 140,
+					"offColor": "150,7,7",
+					"width": 300,
+					"reads": "gpio 16",
+					"onValue": "1",
+					"onSend": "gpio 16 1",
+					"type": "switch",
+					"left": 10,
+					"onText": "Licht",
+					"offText": "Licht"
+				},
+				{
+					"offSend": "gpio 7 0",
+					"onColor": "5,122,1",
+					"knobColor": "55,55,55",
+					"top": 10,
+					"interval": 500,
+					"connection": "RPi",
+					"height": 140,
+					"offColor": "150,7,7",
+					"width": 300,
+					"reads": "gpio 7",
+					"onValue": "1",
+					"onSend": "gpio 7 1",
+					"type": "switch",
+					"left": 490,
+					"onText": "AV",
+					"offText": "AV"
+				},
+				{
+					"icon": "up",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E006F9:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 170
+				},
+				{
+					"icon": "down",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E08679:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 810,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 170
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E016E9:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 650,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "OK",
+					"type": "button",
+					"left": 170
+				},
+				{
+					"icon": "left",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0A659:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 650,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"icon": "right",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E046B9:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 650,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 320
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0F807:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 330,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "Info",
+					"type": "button",
+					"left": 330
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E058A7:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 330,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 170,
+					"icon": "option.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E01AE5:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 810,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 320,
+					"icon": "back"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0B44B:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 810,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 10,
+					"icon": "exit.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0F20D:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "EPG",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0D629:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "CH",
+					"type": "button",
+					"left": 330
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E048B7:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "CH+",
+					"type": "button",
+					"left": 490
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E008F7:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 650,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "CH-",
+					"type": "button",
+					"left": 490
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A50AF:NEC:32&simple=1&pulse=5"
+					],
+					"border": "70,70,70",
+					"top": 330,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 650,
+					"icon": "volpp.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55AD02F:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 650,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 650,
+					"icon": "volm.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A50AF:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 650,
+					"icon": "volp.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55AD02F:NEC:32&simple=1&pulse=5"
+					],
+					"border": "70,70,70",
+					"top": 810,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 650,
+					"icon": "volmm.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A48B7:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 970,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 650,
+					"icon": "mute.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E040BF:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 170,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "circle",
+					"background": "255,0,0",
+					"type": "button",
+					"left": 10,
+					"icon": "standby"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A38C7:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 170,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "circle",
+					"background": "255,0,0",
+					"type": "button",
+					"left": 650,
+					"icon": "standby"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0807F:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 330,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 10,
+					"icon": "source.png"
+				},
+				{
+					"icon": "play",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0E21D:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 970,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"icon": "pause",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E052AD:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 970,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 170
+				},
+				{
+					"icon": "stop",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0629D:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 970,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 330
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E034CB:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 330,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "TXT",
+					"type": "button",
+					"left": 490
+				},
+				{
+					"textcolor": "255,0,0",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E09E61:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 810,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"fontsize": 16,
+					"background": "255,254,254",
+					"type": "button",
+					"left": 490,
+					"icon": "smarthub.png"
+				},
+				{
+					"icon": "reverse",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0A25D:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1130,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E0926D:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1130,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 170,
+					"icon": "record.png"
+				},
+				{
+					"icon": "forward",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=E0E012ED:SAMSUNG:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1130,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 330
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55AAA55:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1130,
+					"connection": "IR",
+					"height": 140,
+					"width": 140,
+					"shape": "rounded",
+					"fontsize": 16,
+					"background": "45,45,45",
+					"label": "Audio Input",
+					"type": "button",
+					"left": 650
+				}
+			],
+			"height": 1280
+		},
+		{
+			"sound": "active",
+			"textcolor": "230,230,230",
+			"name": "BluRay",
+			"items": [
+				{
+					"icon": "standby",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00BCB1:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 30,
+					"height": 180,
+					"width": 180,
+					"shape": "circle",
+					"background": "255,0,0",
+					"textcolor": "230,230,230",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00A1AC:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 290,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "up",
+					"type": "button",
+					"left": 210
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00616C:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 690,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "down",
+					"type": "button",
+					"left": 210
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00111C:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "right",
+					"type": "button",
+					"left": 410
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00E1EC:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "left",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00414C:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "OK",
+					"type": "button",
+					"left": 200
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00929F:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1090,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "previous",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00000D:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1090,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "stop",
+					"type": "button",
+					"left": 210
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00606D:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1090,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "pause",
+					"type": "button",
+					"left": 410
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00525F:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 1090,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "next",
+					"type": "button",
+					"left": 610
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00202D:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 890,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "reverse",
+					"type": "button",
+					"left": 80
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00505D:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 890,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "play",
+					"type": "button",
+					"left": 310
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00A0AD:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 890,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"icon": "forward",
+					"type": "button",
+					"left": 540
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00010C:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 690,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "Menu",
+					"type": "button",
+					"left": 10
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00818C:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 690,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 410,
+					"icon": "back"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D002924:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 290,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 410,
+					"icon": "option.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=D00EAE7:PANASONIC:48&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 290,
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 10,
+					"icon": "home.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A50AF:NEC:32&simple=1&pulse=5"
+					],
+					"border": "70,70,70",
+					"top": 90,
+					"connection": "IR",
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 610,
+					"icon": "volpp.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55A50AF:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 290,
+					"connection": "IR",
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 610,
+					"icon": "volp.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55AD02F:NEC:32&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 490,
+					"connection": "IR",
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 610,
+					"icon": "volm.png"
+				},
+				{
+					"textcolor": "230,230,230",
+					"requiresSendReponse": true,
+					"sends": [
+						"/msg?code=A55AD02F:NEC:32&pulse=5&simple=1"
+					],
+					"border": "70,70,70",
+					"top": 690,
+					"connection": "IR",
+					"height": 180,
+					"width": 180,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"type": "button",
+					"left": 610,
+					"icon": "volmm.png"
+				}
+			],
+			"label": "BluRay",
+			"width": 800,
+			"connection": "IR",
+			"background": "58,58,58",
+			"fitToScreen": true,
+			"height": 1280
+		},
+		{
+			"name": "System",
+			"label": "System",
+			"connection": "RPi",
+			"sound": "active",
+			"items": [
+				{
+					"textcolor": "230,230,230",
+					"sends": [
+						"system kodi 0"
+					],
+					"border": "70,70,70",
+					"top": 370,
+					"connection": "RPi",
+					"height": 120,
+					"width": 300,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "stop KODI",
+					"type": "button",
+					"left": 210
+				},
+				{
+					"textcolor": "230,230,230",
+					"sends": [
+						"system kodi 1"
+					],
+					"border": "70,70,70",
+					"top": 210,
+					"connection": "RPi",
+					"height": 120,
+					"width": 300,
+					"shape": "rounded",
+					"background": "45,45,45",
+					"label": "start KODI",
+					"type": "button",
+					"left": 210
+				}
+			],
+			"fitToScreen": true,
+			"width": 800,
+			"height": 1280,
+			"textcolor": "230,230,230",
+			"background": "58,58,58"
+		}
+	],
+	"switchOnSwipe": false,
+	"description": "Steuerung für zu Hause"
+}
