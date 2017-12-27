@@ -602,7 +602,7 @@ void setup() {
         } else {
           String data = root[x]["data"];
           String addressString = root[x]["address"];
-          long address = strtoul(addressString.c_str(), 0, 0);
+          long address = HexToLongInt(addressString);
           int len = root[x]["length"];
           irblast(type, data, len, rdelay, pulse, pdelay, repeat, address, pickIRsend(out));
         }
@@ -676,7 +676,8 @@ void setup() {
       long address = 0;
       if (server.hasArg("address")) {
         String addressString = server.arg("address");
-        address = strtoul(addressString.c_str(), 0, 0);
+        //address = strtoul(addressString.c_str(), 0, 0);
+        address = HexToLongInt(addressString);
       }
 
       int rdelay = (server.hasArg("rdelay")) ? server.arg("rdelay").toInt() : 1000;
@@ -1036,7 +1037,7 @@ void sendCodePage(Code selCode, int httpcode){
   server.sendContent("        <div class='col-md-12'>\n");
   server.sendContent("          <div class='alert alert-warning'>Don't forget to add your passcode to the URLs below if you set one</div>\n");
   server.sendContent("      </div></div>\n");
-  if (selCode.encoding == "UNKNOWN") {
+  if (strcasecmp(selCode.encoding, "UNKNOWN") == 0) {
   server.sendContent("      <div class='row'>\n");
   server.sendContent("        <div class='col-md-12'>\n");
   server.sendContent("          <ul class='list-unstyled'>\n");
@@ -1046,6 +1047,23 @@ void sendCodePage(Code selCode, int httpcode){
   server.sendContent("            <li><pre>http://" + WiFi.localIP().toString() + ":" + String(port) + "/json?plain=[{'data':[" + String(selCode.raw) + "], 'type':'raw', 'khz':38}]</pre></li>\n");
   server.sendContent("            <li>External IP <span class='label label-default'>JSON</span></li>\n");
   server.sendContent("            <li><pre>http://" + externalIP() + ":" + String(port) + "/json?plain=[{'data':[" + String(selCode.raw) + "], 'type':'raw', 'khz':38}]</pre></li></ul>\n");
+  } else if (strcasecmp(selCode.encoding, "PANASONIC") == 0) {
+  server.sendContent("      <div class='row'>\n");
+  server.sendContent("        <div class='col-md-12'>\n");
+  server.sendContent("          <ul class='list-unstyled'>\n");
+  server.sendContent("            <li>Hostname <span class='label label-default'>MSG</span></li>\n");
+  server.sendContent("            <li><pre>http://" + String(host_name) + ".local:" + String(port) + "/msg?code=" + String(selCode.command) + ":" + String(selCode.encoding) + ":" + String(selCode.bits) + "&address=" + String(selCode.address) + "</pre></li>\n");
+  server.sendContent("            <li>Local IP <span class='label label-default'>MSG</span></li>\n");
+  server.sendContent("            <li><pre>http://" + WiFi.localIP().toString() + ":" + String(port) + "/msg?code=" + String(selCode.command) + ":" + String(selCode.encoding) + ":" + String(selCode.bits) + "&address=" + String(selCode.address) + "</pre></li>\n");
+  server.sendContent("            <li>External IP <span class='label label-default'>MSG</span></li>\n");
+  server.sendContent("            <li><pre>http://" + externalIP() + ":" + String(port) + "/msg?code=" + String(selCode.command) + ":" + String(selCode.encoding) + ":" + String(selCode.bits) + "&address=" + String(selCode.address) + "</pre></li></ul>\n");
+  server.sendContent("          <ul class='list-unstyled'>\n");
+  server.sendContent("            <li>Hostname <span class='label label-default'>JSON</span></li>\n");
+  server.sendContent("            <li><pre>http://" + String(host_name) + ".local:" + String(port) + "/json?plain=[{'data':'" + String(selCode.command) + "', 'type':'" + String(selCode.encoding) + "', 'length':" + String(selCode.bits) + ", 'address':" + String(selCode.address) + "}]</pre></li>\n");
+  server.sendContent("            <li>Local IP <span class='label label-default'>JSON</span></li>\n");
+  server.sendContent("            <li><pre>http://" + WiFi.localIP().toString() + ":" + String(port) + "/json?plain=[{'data':'" + String(selCode.command) + "', 'type':'" + String(selCode.encoding) + "', 'length':" + String(selCode.bits) + ", 'address':" + String(selCode.address) + "}]</pre></li>\n");
+  server.sendContent("            <li>External IP <span class='label label-default'>JSON</span></li>\n");
+  server.sendContent("            <li><pre>http://" + externalIP() + ":" + String(port) + "/json?plain=[{'data':'" + String(selCode.command) + "', 'type':'" + String(selCode.encoding) + "', 'length':" + String(selCode.bits) + ", 'address':" + String(selCode.address) + "}]</pre></li></ul>\n");
   } else {
   server.sendContent("      <div class='row'>\n");
   server.sendContent("        <div class='col-md-12'>\n");
@@ -1086,11 +1104,11 @@ void cvrtCode(Code& codeData, decode_results *results)
     }
   codeData.raw = r;
   if (results->decode_type != UNKNOWN) {
-    strncpy(codeData.address, ("0x" + String(results->address, HEX)).c_str(), 40);
-    strncpy(codeData.command, ("0x" + String(results->command, HEX)).c_str(), 40);
+    strncpy(codeData.address, (String(results->address, HEX)).c_str(), 40);
+    strncpy(codeData.command, (String(results->command, HEX)).c_str(), 40);
   } else {
-    strncpy(codeData.address, "0x", 40);
-    strncpy(codeData.command, "0x", 40);
+    strncpy(codeData.address, "", 40);
+    strncpy(codeData.command, "", 40);
   }
 }
 
@@ -1274,7 +1292,7 @@ void irblast(String type, String dataStr, unsigned int len, int rdelay, int puls
         irsend.sendWhynter(data, len);
       } else if (type == "panasonic") {
         Serial.print("Address: ");
-        Serial.println(address);
+        Serial.println(address, HEX);
         irsend.sendPanasonic(address, data);
       } else if (type == "jvc") {
         irsend.sendJVC(data, len, 0);
